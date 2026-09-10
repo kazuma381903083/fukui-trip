@@ -4,7 +4,7 @@
   const $$ = s => [...document.querySelectorAll(s)];
   const data = window.TRIP.map;
   const nodes = new Map(data.nodes.map(node => [node.id, node]));
-  
+
   const nodeButtons = $$('.map-point');
   function chooseLocation(id) {
     const node = nodes.get(id);
