@@ -60,13 +60,20 @@
     $$('.place-filters button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === day)));
     $$('.place-card').forEach(card => { card.hidden = day !== 'all' && card.dataset.placeDay !== day; });
   }
-  $$('.place-filters button').forEach(button => button.addEventListener('click', () => filterPlaces(button.dataset.filter)));
+  $$('.place-filters button').forEach(button => button.addEventListener('click', () => { $('#place-directory').open = true; filterPlaces(button.dataset.filter); }));
+  function openParents(element) {
+    for (let parent = element?.parentElement; parent; parent = parent.parentElement) {
+      if (parent.tagName === 'DETAILS') parent.open = true;
+    }
+  }
   function revealHash(hash) {
+    const target = document.getElementById(hash.slice(1));
+    if (target) openParents(target);
     const day = /^#day-([123])$/.exec(hash);
     if (day) selectDay(Number(day[1]), false);
     if (hash.startsWith('#place-')) {
       const card = document.getElementById(hash.slice(1));
-      if (card) { filterPlaces('all'); $('details', card).open = true; }
+      if (card) { openParents(card); filterPlaces('all'); $('details', card).open = true; }
     }
   }
   // Reveal filtered-out destinations before the browser performs its anchor scroll.
@@ -138,7 +145,7 @@
   let printState;
   function beforePrint() {
     printState = { details: $$('details').map(d => d.open), hidden: $$('[hidden]') };
-    $$('.place-card details,.archive').forEach(d => { d.open = true; });
+    $$('details').forEach(d => { d.open = true; });
     $$('.place-card,.day-panel').forEach(el => { el.hidden = false; });
   }
   function afterPrint() {

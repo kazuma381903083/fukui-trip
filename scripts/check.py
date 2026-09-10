@@ -43,5 +43,9 @@ assert '__VERSION__' not in sw and '__ASSETS__' not in sw
 assert 'key.startsWith(PREFIX)' in sw, 'Cache cleanup must be scoped to this trip'
 assert [d['nodes'] for d in data['map']['days']]==[['fukui','dinosaur','weaving','awara'],['awara','tojinbo','mikuni','eshikoto','eiheiji','fukui'],['fukui','ichijo','fukui']]
 assert 'class="summary-table"' in text and text.count('data-stamp=')==6
+assert text.count('class="postcard postcard-')==3
+assert text.count('class="full-schedule"')==3
+assert 'id="place-directory"' in text
+assert 'visual.css' in sw and 'assets/dinosaur.webp' in sw and 'assets/ichijodani.webp' in sw
 assert 'journey-extras.js' in sw
 print(f'PASS: {len(page.ids)} anchors, {len(places)} places, {sum(len(d["events"]) for d in days)} itinerary entries, travel constraints and offline assets.')

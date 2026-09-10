@@ -51,3 +51,11 @@ GitHubリポジトリの Settings → Pages → Source を **GitHub Actions** �
 `data/fukui-region.geojson` は地球地図日本（国土地理院）を元にしたdataofjapan/landの県境データから福井・石川・岐阜・滋賀・京都を抽出したものです。出典と加工内容は `credits.html#map-credits` に記載しています。`data/map-stops.json` に代表地点・日別の訪問順・説明を保持します。線は道路経路ではなく訪問順の概略です。
 
 早見表は `scripts/enrich.py` の `SUMMARY` で選択した主要予定を、正本から得た時刻と組み合わせます。原稿の予定名を変更すると不一致をビルド時に検出します。地図・早見表・スタンプはすべてサイト内で完結し、オフラインでも利用できます。スタンプの保存は既存の準備チェックやメモと別キーを使用し、互いを上書きしません。
+
+## 写真から旅をたどるデザイン
+
+入口を3枚の写真付き日程カードと地図にまとめました。日別の主な体験は時刻・アイコンと一緒に表示し、全時間割・比較表・15施設の案内・準備リストは必要なときに開けます。元の49件の予定、予約状態、メモ・チェック・スタンプの保存キーは維持しています。詳細へのアンカーは親の折りたたみも開き、印刷時は全旅程を展開します。
+
+`visual.css` と `scripts/visual.py` が写真・主要予定の表示を担当します。恐竜博物館・一乗谷の写真はCC BY-SA 4.0で加工版を配布しています。出典・作者・変更内容は `credits.html`、Lucideアイコンのライセンスは `assets/icons/LICENSE` にあります。
+
+参考にした表現：写真を入口にする[Here & Away](https://www.here-away.com/)、[紹介記事（2026年6月）](https://abduzeedo.com/here-away-web-design-treats-travel-editorial)。動きは画像のホバー・日程切り替え・スタンプに絞り、[利用者の動きの設定](https://www.w3.org/WAI/WCAG21/Techniques/css/C39.html)に対応。写真カードの横移動にはCSS Scroll Snapを使用しています。

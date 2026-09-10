@@ -10,6 +10,9 @@ with sync_playwright() as p:
  page.on('pageerror',lambda e: errors.append(str(e)))
  page.goto(BASE,wait_until='networkidle')
  # Geography and overview are usable without leaving the guide.
+ expect(page.locator('.postcard')).to_have_count(3)
+ expect(page.locator('.overview-details')).not_to_have_attribute('open','')
+ expect(page.locator('#place-directory')).not_to_have_attribute('open','')
  expect(page.locator('.summary-table tbody tr')).to_have_count(5)
  expect(page.locator('.summary-fixed')).to_have_count(5)
  page.locator('[data-map-day="2"]').click()
@@ -42,6 +45,7 @@ with sync_playwright() as p:
  page.locator('[data-filter="1"]').click();expect(page.locator('#place-eiheiji')).to_be_hidden()
  page.locator('.forest-interlude a').click();expect(page.locator('#place-eiheiji')).to_be_visible()
  assert page.locator('#place-eiheiji details').evaluate('(e)=>e.open')
+ page.locator('.prep-tasks > summary').click()
  first=page.locator('[data-check]').first; first.check();page.locator('#trip-memo').fill('黒龍をお土産に。\nふたりで乾杯。')
  page.reload(wait_until='networkidle');expect(first).to_be_checked();expect(page.locator('#trip-memo')).to_have_value('黒龍をお土産に。\nふたりで乾杯。')
  with page.expect_download() as download:page.locator('#export-memo').click()
@@ -55,11 +59,12 @@ with sync_playwright() as p:
  assert page.locator('.map-surface').evaluate('(e)=>e.scrollWidth>e.clientWidth')
  assert not page.evaluate('document.documentElement.scrollWidth>innerWidth')
  page.locator('#map-zoom').click()
+ page.locator('.overview-details > summary').click()
  page.locator('.summary-table thead').scroll_into_view_if_needed()
  page.locator('.summary-scroll').evaluate('(e)=>e.scrollLeft=e.scrollWidth')
  expect(page.locator('.summary-table thead th').last).to_be_in_viewport()
  page.screenshot(path='/tmp/fukui-mobile-verified.png',full_page=True)
- assert page.locator('img').evaluate_all('(imgs)=>imgs.every(i=>i.complete&&i.naturalWidth>0)')
+ assert page.locator('img:visible').evaluate_all('(imgs)=>imgs.every(i=>i.complete&&i.naturalWidth>0)')
  # Keep another trip's cache intact when this worker activates.
  page.evaluate("caches.open('shirasagi-test-preserve').then(c=>c.put('./previous-trip',new Response('keep')))")
  page.evaluate('navigator.serviceWorker.ready')
@@ -71,10 +76,21 @@ with sync_playwright() as p:
  page.reload(wait_until='networkidle')
  expect(page.locator('h1')).to_contain_text('ふくい')
  page.locator('#day-tab-3').click();expect(page.locator('#day-3')).to_be_visible()
- assert page.locator('img').evaluate_all('(imgs)=>imgs.every(i=>i.complete&&i.naturalWidth>0)')
+ page.locator('#day-3 .chapter-image img').scroll_into_view_if_needed()
+ page.wait_for_function("document.querySelector('#day-3 .chapter-image img').complete")
+ assert page.locator('img:visible').evaluate_all('(imgs)=>imgs.every(i=>i.complete&&i.naturalWidth>0)')
  page.locator('[data-map-day="2"]').click();expect(page.locator('.map-stop-button')).to_have_count(6)
  page.locator('[data-stamp="tojinbo"]').click();expect(page.locator('[data-stamp="tojinbo"]')).to_have_attribute('aria-pressed','true')
  context.set_offline(False)
+ # Direct facility anchors open their containing directory as well as their detail.
+ page.goto(BASE+'#place-eiheiji',wait_until='networkidle')
+ expect(page.locator('#place-directory')).to_have_attribute('open','')
+ expect(page.locator('#place-eiheiji')).to_be_in_viewport()
+ # Print opens all schedules, then restores the reader's previous disclosures.
+ page.evaluate("window.dispatchEvent(new Event('beforeprint'))")
+ assert page.locator('details:not([open])').count()==0
+ page.evaluate("window.dispatchEvent(new Event('afterprint'))")
+ expect(page.locator('.overview-details')).not_to_have_attribute('open','')
  assert not errors,errors
  context.close()
  # Date scenarios are evaluated in a different OS time zone to verify Japan-time handling.

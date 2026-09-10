@@ -35,7 +35,7 @@
     itinerary.replaceChildren();
     if (selected) {
       $('#map-story-kicker').textContent = `DAY 0${selected.n} / ${window.TRIP.days[selected.n - 1].short}`;
-      $('#map-story-title').textContent = selected.title;
+      $('#map-story-title').textContent = selected.short;
       $('#map-story-note').textContent = selected.note;
       $('#map-finish').textContent = selected.finish;
       selected.nodes.forEach((id, i) => {
@@ -48,8 +48,8 @@
       });
     } else {
       $('#map-story-kicker').textContent = '3 DAYS / ひとめぐり';
-      $('#map-story-title').textContent = '北へ、東へ。ふたりの福井を結ぶ。';
-      $('#map-story-note').textContent = '日付を選ぶと、その日の移動を表示します。地図の地点を押して、旅先の案内を開いてみて。';
+      $('#map-story-title').textContent = '海へ、里へ。';
+      $('#map-story-note').textContent = '地点を押すと、案内がひらきます。';
       $('#map-finish').textContent = '東京 ↔ 福井は北陸新幹線。県内はレンタカー、夜の福井市内は徒歩で。';
       data.days.forEach(d => {
         const button = document.createElement('button');button.type='button';button.className='map-day-overview';button.style.setProperty('--route-color',d.color);
