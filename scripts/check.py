@@ -41,4 +41,7 @@ for icon in manifest['icons']:assert (ROOT/icon['src']).is_file()
 sw=(ROOT/'sw.js').read_text()
 assert '__VERSION__' not in sw and '__ASSETS__' not in sw
 assert 'key.startsWith(PREFIX)' in sw, 'Cache cleanup must be scoped to this trip'
+assert [d['nodes'] for d in data['map']['days']]==[['fukui','dinosaur','weaving','awara'],['awara','tojinbo','mikuni','eshikoto','eiheiji','fukui'],['fukui','ichijo','fukui']]
+assert 'class="summary-table"' in text and text.count('data-stamp=')==6
+assert 'journey-extras.js' in sw
 print(f'PASS: {len(page.ids)} anchors, {len(places)} places, {sum(len(d["events"]) for d in days)} itinerary entries, travel constraints and offline assets.')

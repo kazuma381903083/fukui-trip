@@ -1,7 +1,7 @@
 'use strict';
 const PREFIX = 'fukui-trip-2026-';
-const CACHE = PREFIX + '1ee7575d6614';
-const ASSETS = ["./", "./index.html", "./style.css", "./trip-data.js", "./app.js", "./manifest.webmanifest", "./credits.html", "./assets/tojinbo.webp", "./assets/eiheiji.webp", "./assets/icon-192.png", "./assets/icon-512.png"];
+const CACHE = PREFIX + '232a899a50d6';
+const ASSETS = ["./", "./index.html", "./style.css", "./trip-data.js", "./app.js", "./journey-extras.js", "./manifest.webmanifest", "./credits.html", "./assets/tojinbo.webp", "./assets/eiheiji.webp", "./assets/icon-192.png", "./assets/icon-512.png"];
 const scope = new URL('./', self.location.href);
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));

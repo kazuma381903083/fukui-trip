@@ -1,0 +1,149 @@
+{
+  "source": "地球地図日本（国土地理院） / dataofjapan。地点は施設案内などに基づく地域内の代表位置。",
+  "nodes": [
+    {
+      "id": "fukui",
+      "name": "福井駅・市街地",
+      "lon": 136.2233,
+      "lat": 36.062,
+      "dx": 5,
+      "dy": 37,
+      "anchor": "middle",
+      "place": "car",
+      "description": "新幹線とレンタカーの拠点。Day 2はホテルに車を置き、煙やへ徒歩。Day 3は車を返して駅へ。"
+    },
+    {
+      "id": "dinosaur",
+      "name": "恐竜博物館",
+      "lon": 136.5065,
+      "lat": 36.0828,
+      "dx": 17,
+      "dy": -19,
+      "anchor": "start",
+      "place": "dinosaur",
+      "description": "Day 1・11:00入館。臨時駐車場なら13:00頃、園内駐車なら13:30頃までに見学を終える目安。"
+    },
+    {
+      "id": "weaving",
+      "name": "ゆめおーれ勝山",
+      "lon": 136.5031,
+      "lat": 36.0619,
+      "dx": 18,
+      "dy": 31,
+      "anchor": "start",
+      "place": "weaving",
+      "description": "Day 1・15:00〜16:00の手織り体験。終了後は寄り道せず、あわらの宿へ。"
+    },
+    {
+      "id": "awara",
+      "name": "あわら温泉・長谷川",
+      "lon": 136.1942,
+      "lat": 36.2296,
+      "dx": 17,
+      "dy": -22,
+      "anchor": "start",
+      "place": "hasegawa",
+      "description": "Day 1は17:30到着予定。翌朝09:00に出発して、日本海側の東尋坊へ。"
+    },
+    {
+      "id": "tojinbo",
+      "name": "東尋坊",
+      "lon": 136.1256,
+      "lat": 36.2375,
+      "dx": -16,
+      "dy": -20,
+      "anchor": "end",
+      "place": "tojinbo",
+      "description": "Day 2・09:30〜10:30の海岸散策。雨や強風なら短縮して、休憩を。"
+    },
+    {
+      "id": "mikuni",
+      "name": "三国・海鮮ランチ",
+      "lon": 136.147,
+      "lat": 36.225,
+      "dx": -23,
+      "dy": 37,
+      "anchor": "end",
+      "place": "lunch",
+      "description": "Day 2・11:00のみくに隠居処が第一候補、未予約。12:15退出を目標にESHIKOTOへ。"
+    },
+    {
+      "id": "eshikoto",
+      "name": "ESHIKOTO",
+      "lon": 136.3467,
+      "lat": 36.0967,
+      "dx": -6,
+      "dy": -25,
+      "anchor": "middle",
+      "place": "eshikoto",
+      "description": "Day 2・13:15〜14:00。九頭竜川のほとりで酒の買い物と景色を。運転する人は試飲をしません。"
+    },
+    {
+      "id": "eiheiji",
+      "name": "永平寺",
+      "lon": 136.3555,
+      "lat": 36.0555,
+      "dx": 18,
+      "dy": 25,
+      "anchor": "start",
+      "place": "eiheiji",
+      "description": "Day 2・14:30〜16:00に参拝。福井市へ戻り、17:00頃ホテルにチェックイン。"
+    },
+    {
+      "id": "ichijo",
+      "name": "一乗谷",
+      "lon": 136.2984,
+      "lat": 36.015,
+      "dx": -8,
+      "dy": 32,
+      "anchor": "middle",
+      "place": "museum",
+      "description": "Day 3は09:45〜11:45に博物館、昼食後13:00〜14:30に遺跡へ。ガイドは予約調整中。15:00に一乗谷を出発。"
+    }
+  ],
+  "days": [
+    {
+      "n": 1,
+      "title": "東の勝山へ。最後は、あわらの湯。",
+      "short": "福井 → 勝山 → あわら",
+      "color": "#aa633b",
+      "nodes": [
+        "fukui",
+        "dinosaur",
+        "weaving",
+        "awara"
+      ],
+      "note": "09:30に車を受け取り、勝山で博物館と手織り体験。夕方に北西のあわらへ。",
+      "finish": "17:30 長谷川到着予定"
+    },
+    {
+      "n": 2,
+      "title": "海から川辺、永平寺を経て福井市へ。",
+      "short": "あわら → 三国 → 永平寺 → 福井",
+      "color": "#247e8a",
+      "nodes": [
+        "awara",
+        "tojinbo",
+        "mikuni",
+        "eshikoto",
+        "eiheiji",
+        "fukui"
+      ],
+      "note": "09:00に宿を出発して日本海へ。午後は内陸へ向かい、夜は福井市内を徒歩で。",
+      "finish": "17:00頃 ホテル ／ 20:45 煙や"
+    },
+    {
+      "n": 3,
+      "title": "南東の一乗谷へ。福井駅に戻って乾杯。",
+      "short": "福井 → 一乗谷 → 福井駅",
+      "color": "#737640",
+      "nodes": [
+        "fukui",
+        "ichijo",
+        "fukui"
+      ],
+      "note": "09:00にホテルを出発。一乗谷の博物館・遺跡を巡り、給油・返却を済ませて駅へ。",
+      "finish": "返却目標16:00〜16:30 ／ 新幹線18:18"
+    }
+  ]
+}
