@@ -59,3 +59,13 @@ GitHubリポジトリの Settings → Pages → Source を **GitHub Actions** �
 `visual.css` と `scripts/visual.py` が写真・主要予定の表示を担当します。恐竜博物館・一乗谷の写真はCC BY-SA 4.0で加工版を配布しています。出典・作者・変更内容は `credits.html`、Lucideアイコンのライセンスは `assets/icons/LICENSE` にあります。
 
 参考にした表現：写真を入口にする[Here & Away](https://www.here-away.com/)、[紹介記事（2026年6月）](https://abduzeedo.com/here-away-web-design-treats-travel-editorial)。動きは画像のホバー・日程切り替え・スタンプに絞り、[利用者の動きの設定](https://www.w3.org/WAI/WCAG21/Techniques/css/C39.html)に対応。写真カードの横移動にはCSS Scroll Snapを使用しています。
+
+## 冒険地図と小さな仕掛け
+
+地図を4枚の写真切手、温泉・食・手織りなどのアイコン、旅する恐竜で構成しています。地理上の代表位置と写真・アイコンを細い補助線で結び、日別の色線は訪問順を示します。`scripts/adventure_map.py` が地図を生成し、`delight.css` が紙の質感やレスポンシブ表示を担当します。
+
+「旅をたどる」は操作したときだけ始まり、一時停止・再開・もう一度の再生ができます。日程変更やページを離れた際は停止し、動きを減らす設定では手動で一地点ずつ進みます。Day 3は福井駅への帰着も独立したステップです。恐竜を押すと旅先をひとつ開きます。どちらの操作も訪問スタンプには影響しません。
+
+スタンプを押すと地図にも記録が付き、6つそろうと思い出の小さな記念カードが現れます。短い紙吹雪は新しく押したときだけで、再読み込みや取り消しでは再生しません。既存の保存データ・49件の予定はそのまま引き継ぎます。
+
+恐竜の画像は組み込みの imagegen で制作した透過イラストです。公開用ファイルは `assets/dinosaur-traveler.webp`（470 × 500、約40 KB）。最終プロンプトとツール・加工情報は `data/dinosaur-traveler-provenance.json` に記録しています。

@@ -1,7 +1,7 @@
 """Optional real-browser QA: run with a Python environment containing Playwright."""
 from playwright.sync_api import sync_playwright,expect
 from pathlib import Path
-import json,sys
+import json,sys,re
 BASE=sys.argv[1] if len(sys.argv)>1 else 'http://127.0.0.1:4173/'
 with sync_playwright() as p:
  browser=p.chromium.launch()
@@ -27,15 +27,34 @@ with sync_playwright() as p:
  expect(page.locator('#map-finish')).to_contain_text('16:00〜16:30')
  page.locator('[data-map-day="all"]').click()
  expect(page.locator('.map-route-day.is-muted')).to_have_count(0)
+ # Reduced motion uses deliberate steps; Day 3 includes the return to the same station.
+ page.locator('[data-map-day="3"]').click();page.locator('#map-play').click()
+ expect(page.locator('#map-play')).to_have_attribute('aria-pressed','true')
+ expect(page.locator('#map-next')).to_be_visible()
+ expect(page.locator('#map-play-status')).to_contain_text('1/3')
+ page.locator('#map-next').click();expect(page.locator('#map-location-name')).to_have_text('一乗谷')
+ expect(page.locator('#map-location-image')).to_have_attribute('src','assets/ichijodani.webp')
+ page.locator('#map-next').click();expect(page.locator('#map-play-status')).to_contain_text('福井駅に帰着')
+ expect(page.locator('.map-stop-button[aria-current="true"]')).to_contain_text('帰着')
+ expect(page.locator('#map-play')).to_have_attribute('aria-pressed','false')
+ expect(page.locator('#map-play')).to_be_focused()
+ page.locator('#map-surprise').click();expect(page.locator('#map-selection')).to_be_visible()
+ expect(page.locator('[data-map-day="all"]')).to_have_attribute('aria-pressed','true')
+ expect(page.locator('#stamp-count')).to_have_text('0 / 6')
+ point=page.locator('[data-map-node="dinosaur"]');point.focus();point.press('Space')
+ expect(page.locator('#map-location-name')).to_have_text('恐竜博物館');expect(point).to_be_focused()
  stamp=page.locator('[data-stamp="dinosaur"]');stamp.click()
  expect(stamp).to_have_attribute('aria-pressed','true')
+ expect(page.locator('[data-map-node="dinosaur"]')).to_have_class(re.compile(r'.*\bis-visited\b.*'))
  page.reload(wait_until='networkidle');expect(stamp).to_have_attribute('aria-pressed','true')
  stamp.click();expect(stamp).to_have_attribute('aria-pressed','false')
  # Each stamp can be toggled, and completing the book has a distinct message.
  for button in page.locator('.travel-stamp').all():button.click()
  expect(page.locator('#stamp-count')).to_have_text('6 / 6')
  expect(page.locator('#stamp-message')).to_contain_text('六つそろった')
+ expect(page.locator('#stamp-keepsake')).to_be_visible()
  for button in page.locator('.travel-stamp').all():button.click()
+ expect(page.locator('#stamp-keepsake')).to_be_hidden()
  expect(page.locator('#day-1')).to_be_visible()
  page.locator('#day-tab-2').click()
  expect(page.locator('#day-2')).to_be_visible(); expect(page.locator('#day-1')).to_be_hidden()
@@ -93,6 +112,22 @@ with sync_playwright() as p:
  expect(page.locator('.overview-details')).not_to_have_attribute('open','')
  assert not errors,errors
  context.close()
+ # Normal motion is opt-in, pausable, resumes, and stops on a day change.
+ c=browser.new_context(service_workers='block',reduced_motion='no-preference',viewport={'width':1440,'height':1000})
+ pg=c.new_page();pg.goto(BASE,wait_until='networkidle');pg.clock.install()
+ pg.locator('#map-play').click();expect(pg.locator('#map-location-name')).to_have_text('福井駅・市街地')
+ pg.clock.run_for(3500);expect(pg.locator('#map-location-name')).to_have_text('恐竜博物館')
+ pg.locator('#map-play').click();pg.clock.run_for(7000)
+ expect(pg.locator('#map-location-name')).to_have_text('恐竜博物館')
+ expect(pg.locator('#map-play')).to_have_attribute('aria-pressed','false')
+ pg.locator('#map-play').click();pg.clock.run_for(1100)
+ expect(pg.locator('#map-location-name')).to_have_text('ゆめおーれ勝山')
+ pg.locator('[data-map-day="3"]').click();pg.clock.run_for(6000)
+ expect(pg.locator('#map-selection')).to_be_hidden();expect(pg.locator('#map-traveler')).to_have_attribute('visibility','hidden')
+ pg.locator('#map-play').click();pg.clock.run_for(6800)
+ expect(pg.locator('#map-play-status')).to_contain_text('福井駅に帰着')
+ expect(pg.locator('#map-play')).to_have_attribute('aria-pressed','false')
+ c.close()
  # Date scenarios are evaluated in a different OS time zone to verify Japan-time handling.
  scenarios=[('2026-09-20T15:10:00Z','1','05:45'),('2026-09-22T04:00:00Z','2','13:15'),('2026-09-23T08:00:00Z','3','17:15'),('2026-09-24T00:00:00Z','1','ふたりで過ごした福井')]
  for iso,day,title in scenarios:

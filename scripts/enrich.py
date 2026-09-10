@@ -1,53 +1,7 @@
 """Offline geographic SVG, source-linked summary, and playful travel stamps."""
-from pathlib import Path
-import json,math,html
+import html
 from visual import make_postcards, icon
-ROOT=Path(__file__).resolve().parent.parent
-
-def project(lon,lat):
-    # Local equirectangular projection with latitude correction; north is up.
-    return (lon-136.0)*1130*math.cos(math.radians(36.1))+38,(36.31-lat)*1130+25
-
-def geometry_path(geometry,proj):
-    polys=geometry['coordinates'] if geometry['type']=='MultiPolygon' else [geometry['coordinates']]
-    result=[]
-    for poly in polys:
-        for ring in poly:
-            points=[proj(*p[:2]) for p in ring]
-            result.append('M'+' L'.join(f'{x:.1f},{y:.1f}' for x,y in points)+' Z')
-    return ' '.join(result)
-
-def make_map():
-    geo=json.loads((ROOT/'data/fukui-region.geojson').read_text())
-    data=json.loads((ROOT/'data/map-stops.json').read_text())
-    nodes={n['id']:n for n in data['nodes']}
-    land=''.join(f'<path d="{geometry_path(f["geometry"],project)}" class="map-land {"is-fukui" if f["properties"]["id"]==18 else ""}"/>' for f in geo['features'])
-    lines='';markers=''
-    for day in data['days']:
-        routes=[]
-        for i,(start,end) in enumerate(zip(day['nodes'],day['nodes'][1:])):
-            a,b=nodes[start],nodes[end];x,y=project(a['lon'],a['lat']);xx,yy=project(b['lon'],b['lat'])
-            dx,dy=xx-x,yy-y;length=math.hypot(dx,dy)
-            # Shorten each end so arrowheads stop before the location symbol.
-            ux,uy=dx/length,dy/length
-            x+=ux*13;y+=uy*13;xx-=ux*13;yy-=uy*13
-            if day['n']==3:
-                offset=21;cx=(x+xx)/2-uy*offset;cy=(y+yy)/2+ux*offset
-                path=f'M{x:.1f},{y:.1f} Q{cx:.1f},{cy:.1f} {xx:.1f},{yy:.1f}'
-            else:path=f'M{x:.1f},{y:.1f} L{xx:.1f},{yy:.1f}'
-            routes.append(f'<path d="{path}" class="map-route" marker-end="url(#arrow-{day["n"]})" pathLength="100"/>')
-        lines+=f'<g class="map-route-day" data-map-route="{day["n"]}" style="--route-color:{day["color"]}">{"".join(routes)}</g>'
-    for n in data['nodes']:
-        x,y=project(n['lon'],n['lat']);tx,ty=x+n['dx'],y+n['dy']
-        markers+=f'''<a href="#place-{n['place']}" class="map-point" data-map-node="{n['id']}" aria-label="{n['name']}の案内"><title>{n['name']}</title><circle class="map-hit" cx="{x:.1f}" cy="{y:.1f}" r="21"/><circle class="map-pin" cx="{x:.1f}" cy="{y:.1f}" r="10"/><text class="map-pin-number" x="{x:.1f}" y="{y+3.5:.1f}" text-anchor="middle">·</text><path class="map-leader" d="M{x:.1f},{y:.1f} L{tx:.1f},{ty-5:.1f}"/><text class="map-label" x="{tx:.1f}" y="{ty:.1f}" text-anchor="{n['anchor']}">{n['name']}</text></a>'''
-    fukui=next(f for f in geo['features'] if f['properties']['id']==18)
-    inset_proj=lambda lon,lat:((lon-135.43)*89,(36.35-lat)*110)
-    inset_path=geometry_path(fukui['geometry'],inset_proj)
-    svg=f'''<svg class="fukui-map" viewBox="0 0 700 480" aria-labelledby="map-svg-title map-svg-desc"><title id="map-svg-title">福井県の北部・嶺北を巡る3日間の地図</title><desc id="map-svg-desc">北が上。Day 1は福井から東の勝山、北西のあわら。Day 2は西の東尋坊と三国から南東のESHIKOTO・永平寺を経て福井。Day 3は南東の一乗谷と福井を往復。線は訪問順を示し、道路の経路ではありません。</desc><defs><clipPath id="map-clip"><rect width="700" height="480" rx="3"/></clipPath>{''.join(f'<marker id="arrow-{d["n"]}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9" fill="none" stroke="{d["color"]}" stroke-width="1.8"/></marker>' for d in data['days'])}<pattern id="map-grid" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M42,0 H0 V42" fill="none" stroke="#547e7911" stroke-width="1"/></pattern></defs><g clip-path="url(#map-clip)"><rect width="700" height="480" fill="#deebe8"/>{land}<rect width="700" height="480" fill="url(#map-grid)"/><text class="sea-label" x="48" y="178">日本海</text><text class="map-small" x="49" y="196">SEA OF JAPAN</text><text class="region-label" x="487" y="54">石川県</text><text class="region-label" x="480" y="411">福井県・嶺北</text>{lines}{markers}<g class="map-north" transform="translate(648 45)"><text text-anchor="middle" y="-14">N</text><path d="M0,0 V35 M-5,8 L0,0 L5,8"/></g><g transform="translate(24 300)"><rect width="170" height="155" rx="3" fill="#f8f7f2" stroke="#c1d1c6"/><text x="13" y="23" class="inset-title">福井県全体</text><g transform="translate(4 34)"><path d="{inset_path}" fill="#cdd8c6" stroke="#7f9788" stroke-width=".8"/><rect x="51" y="4" width="68" height="47" fill="#ae663322" stroke="#a46840" stroke-width="1.2" stroke-dasharray="3 2"/><text x="42" y="107" class="map-small">今回の旅のエリア</text></g></g><g transform="translate(235 446)"><path d="M0,-5 V0 H101.6 V-5" stroke="#62796b" fill="none"/><text x="50.8" y="17" text-anchor="middle" class="map-small">約10 km</text></g></g></svg>'''
-    filters='<div class="map-filters" role="group" aria-label="地図の日程"><button type="button" data-map-day="all" aria-pressed="true">全日程</button>'+''.join(f'<button type="button" data-map-day="{d["n"]}" aria-pressed="false" style="--route-color:{d["color"]}"><i aria-hidden="true"></i>Day {d["n"]}</button>' for d in data['days'])+'</div>'
-    legend=''.join(f'<span style="--route-color:{d["color"]}"><i></i>Day {d["n"]}</span>' for d in data['days'])
-    map_html=f'''<div class="map-tool"><div class="map-toolbar"><span class="eyebrow">FUKUI ROAD TRIP</span>{filters}</div><div class="map-layout"><div class="map-surface" tabindex="0" role="region" aria-label="福井県の旅の地図。拡大時は左右にスクロールできます"><button class="map-zoom" id="map-zoom" type="button" aria-pressed="false">地図を拡大 ＋</button>{svg}<div class="map-legend">{legend}<span>→ 訪問順</span></div></div><aside class="map-story" aria-label="地図の案内"><p class="eyebrow" id="map-story-kicker">3 DAYS / ひとめぐり</p><h3 id="map-story-title">海へ、里へ。</h3><p id="map-story-note">地点を押すと、案内がひらきます。</p><div id="map-itinerary"></div><div class="map-selection" id="map-selection" hidden><p id="map-location-name"></p><p id="map-location-note"></p><a id="map-location-link" href="#places">施設のくわしい案内 ↗</a></div><p class="map-finish" id="map-finish">東京 ↔ 福井は北陸新幹線<br>県内はレンタカー。夜の福井市内は徒歩で。</p></aside></div><p class="map-caption">線は訪問順の概略。道路の経路は施設の案内で確認。<a href="credits.html#map-credits">地図の出典 ↗</a></p></div>'''
-    return map_html,data
+from adventure_map import make_map
 
 # Event titles reference the master itinerary, so summary times follow source updates.
 SUMMARY=[
@@ -84,4 +38,4 @@ def make_summary(days):
 STAMPS=[('dinosaur','太古','恐竜に出会った','DAY 1'),('weaving','織','糸から思い出へ','DAY 1'),('hasegawa','湯','湯上がりの幸せ','DAY 1'),('tojinbo','海','日本海で深呼吸','DAY 2'),('eiheiji','祈','静けさを味わう','DAY 2'),('ruins','歴史','城下町を歩いた','DAY 3')]
 def make_stamps():
     buttons=''.join(f'<button class="travel-stamp" type="button" data-stamp="{id}" aria-pressed="false" aria-label="{title}のスタンプを押す"><span class="stamp-day">{day}</span><strong>{icon({"dinosaur":"bone","weaving":"scissors","hasegawa":"bath","tojinbo":"droplets","eiheiji":"trees","ruins":"landmark"}[id])}</strong><span class="stamp-word">{title}</span><span class="stamp-action">ぽん、と押す</span></button>' for id,kanji,title,day in STAMPS)
-    return f'''<section class="stamp-section section-wrap" id="stamps"><div class="section-heading"><div><p class="eyebrow">SIX LITTLE SOUVENIRS</p><h2>思い出を、ぽん。</h2></div><p>訪れたら、ぽん。六つの思い出を集めよう。</p></div><div class="stamp-book">{buttons}</div><div class="stamp-bottom"><p id="stamp-message" role="status">まだ白紙のスタンプ帳。どこから思い出が増えるかな。</p><span id="stamp-count">0 / 6</span></div><p class="storage-hint">スタンプはこの端末に保存。もう一度押すと取り消せます。</p></section>'''
+    return f'''<section class="stamp-section section-wrap" id="stamps"><div class="section-heading"><div><p class="eyebrow">SIX LITTLE SOUVENIRS</p><h2>思い出を、ぽん。</h2></div><p>訪れたら、ぽん。六つの思い出を集めよう。</p></div><div class="stamp-book">{buttons}</div><div class="stamp-bottom"><p id="stamp-message" role="status">まだ白紙のスタンプ帳。どこから思い出が増えるかな。</p><span id="stamp-count">0 / 6</span></div><div class="stamp-keepsake" id="stamp-keepsake" hidden><p>福井の思い出、コンプリート。<small>FUKUI · 2026.09.21 — 23 · FOR THE TWO OF US</small></p>{icon('ticket')}</div><p class="storage-hint">スタンプはこの端末に保存。もう一度押すと取り消せます。</p></section>'''

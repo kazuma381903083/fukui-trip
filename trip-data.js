@@ -11,7 +11,9 @@ window.TRIP = {
         "dy": 37,
         "anchor": "middle",
         "place": "car",
-        "description": "新幹線とレンタカーの拠点。Day 2はホテルに車を置き、煙やへ徒歩。Day 3は車を返して駅へ。"
+        "description": "新幹線とレンタカーの拠点。Day 2はホテルに車を置き、煙やへ徒歩。Day 3は車を返して駅へ。",
+        "label": "福井駅",
+        "tease": "旅のはじまりも、帰り道も。"
       },
       {
         "id": "dinosaur",
@@ -22,7 +24,11 @@ window.TRIP = {
         "dy": -19,
         "anchor": "start",
         "place": "dinosaur",
-        "description": "Day 1・11:00入館。臨時駐車場なら13:00頃、園内駐車なら13:30頃までに見学を終える目安。"
+        "description": "Day 1・11:00入館。臨時駐車場なら13:00頃、園内駐車なら13:30頃までに見学を終える目安。",
+        "photo": "dinosaur.webp",
+        "label": "恐竜博物館",
+        "stamp": "dinosaur",
+        "tease": "見上げる先に、太古の世界。"
       },
       {
         "id": "weaving",
@@ -33,7 +39,10 @@ window.TRIP = {
         "dy": 31,
         "anchor": "start",
         "place": "weaving",
-        "description": "Day 1・15:00〜16:00の手織り体験。終了後は寄り道せず、あわらの宿へ。"
+        "description": "Day 1・15:00〜16:00の手織り体験。終了後は寄り道せず、あわらの宿へ。",
+        "label": "ゆめおーれ",
+        "stamp": "weaving",
+        "tease": "糸を重ねて、旅の思い出に。"
       },
       {
         "id": "awara",
@@ -44,7 +53,10 @@ window.TRIP = {
         "dy": -22,
         "anchor": "start",
         "place": "hasegawa",
-        "description": "Day 1は17:30到着予定。翌朝09:00に出発して、日本海側の東尋坊へ。"
+        "description": "Day 1は17:30到着予定。翌朝09:00に出発して、日本海側の東尋坊へ。",
+        "label": "あわら温泉",
+        "stamp": "hasegawa",
+        "tease": "今日の思い出を、湯にほどく。"
       },
       {
         "id": "tojinbo",
@@ -55,7 +67,11 @@ window.TRIP = {
         "dy": -20,
         "anchor": "end",
         "place": "tojinbo",
-        "description": "Day 2・09:30〜10:30の海岸散策。雨や強風なら短縮して、休憩を。"
+        "description": "Day 2・09:30〜10:30の海岸散策。雨や強風なら短縮して、休憩を。",
+        "photo": "tojinbo.webp",
+        "label": "東尋坊",
+        "stamp": "tojinbo",
+        "tease": "青の向こうで、深呼吸。"
       },
       {
         "id": "mikuni",
@@ -66,7 +82,9 @@ window.TRIP = {
         "dy": 37,
         "anchor": "end",
         "place": "lunch",
-        "description": "Day 2・11:00のみくに隠居処が第一候補、未予約。12:15退出を目標にESHIKOTOへ。"
+        "description": "Day 2・11:00のみくに隠居処が第一候補、未予約。12:15退出を目標にESHIKOTOへ。",
+        "label": "三国ランチ",
+        "tease": "海辺のお昼は、おいしい予感。"
       },
       {
         "id": "eshikoto",
@@ -77,7 +95,9 @@ window.TRIP = {
         "dy": -25,
         "anchor": "middle",
         "place": "eshikoto",
-        "description": "Day 2・13:15〜14:00。九頭竜川のほとりで酒の買い物と景色を。運転する人は試飲をしません。"
+        "description": "Day 2・13:15〜14:00。九頭竜川のほとりで酒の買い物と景色を。運転する人は試飲をしません。",
+        "label": "ESHIKOTO",
+        "tease": "川の眺めと、お土産えらび。"
       },
       {
         "id": "eiheiji",
@@ -88,7 +108,11 @@ window.TRIP = {
         "dy": 25,
         "anchor": "start",
         "place": "eiheiji",
-        "description": "Day 2・14:30〜16:00に参拝。福井市へ戻り、17:00頃ホテルにチェックイン。"
+        "description": "Day 2・14:30〜16:00に参拝。福井市へ戻り、17:00頃ホテルにチェックイン。",
+        "photo": "eiheiji.webp",
+        "label": "永平寺",
+        "stamp": "eiheiji",
+        "tease": "杉木立の奥で、ひと呼吸。"
       },
       {
         "id": "ichijo",
@@ -99,7 +123,11 @@ window.TRIP = {
         "dy": 32,
         "anchor": "middle",
         "place": "museum",
-        "description": "Day 3は09:45〜11:45に博物館、昼食後13:00〜14:30に遺跡へ。ガイドは予約調整中。15:00に一乗谷を出発。"
+        "description": "Day 3は09:45〜11:45に博物館、昼食後13:00〜14:30に遺跡へ。ガイドは予約調整中。15:00に一乗谷を出発。",
+        "photo": "ichijodani.webp",
+        "label": "一乗谷",
+        "stamp": "ruins",
+        "tease": "昔の町へ、歩幅をゆるめて。"
       }
     ],
     "days": [

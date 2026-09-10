@@ -11,6 +11,7 @@ class Page(HTMLParser):
         if 'id' in a:self.ids.append(a['id'])
         if tag=='a':self.links.append(a.get('href',''))
         if tag in ['img','script'] and 'src' in a:self.assets.append(a['src'])
+        if tag=='image' and 'href' in a:self.assets.append(a['href'])
         if tag=='link' and 'href' in a:self.assets.append(a['href'])
 page=Page(); text=(ROOT/'index.html').read_text(); page.feed(text)
 assert len(page.ids)==len(set(page.ids)), 'Duplicate HTML IDs'
@@ -48,4 +49,8 @@ assert text.count('class="full-schedule"')==3
 assert 'id="place-directory"' in text
 assert 'visual.css' in sw and 'assets/dinosaur.webp' in sw and 'assets/ichijodani.webp' in sw
 assert 'journey-extras.js' in sw
+assert 'delight.css' in sw and 'assets/dinosaur-traveler.webp' in sw
+assert text.count('class="map-photo-stamp"')==4
+for control in ['map-play','map-next','map-surprise','stamp-keepsake']:
+    assert control in page.ids
 print(f'PASS: {len(page.ids)} anchors, {len(places)} places, {sum(len(d["events"]) for d in days)} itinerary entries, travel constraints and offline assets.')

@@ -115,7 +115,7 @@ page='''<!doctype html>
 <meta name="robots" content="noindex,nofollow"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ふくいのしおり">
 <title>ふくい、余白の三日間。｜2026.9.21–23</title>
 <link rel="icon" href="assets/icon-192.png" type="image/png"><link rel="apple-touch-icon" href="assets/icon-192.png"><link rel="manifest" href="manifest.webmanifest">
-<link rel="preload" as="image" href="assets/tojinbo.webp" fetchpriority="high"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="visual.css">
+<link rel="preload" as="image" href="assets/tojinbo.webp" fetchpriority="high"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="visual.css"><link rel="stylesheet" href="delight.css">
 <script src="trip-data.js" defer></script><script src="app.js" defer></script><script src="journey-extras.js" defer></script>
 </head>
 <body>
@@ -126,7 +126,7 @@ page='''<!doctype html>
 
 <section class="now-section section-wrap" id="now" aria-labelledby="now-heading"><div class="now-label"><span class="status-dot"></span><span id="journey-state">BEFORE THE JOURNEY</span><h2 id="now-heading">旅のはじまりまで</h2></div><div class="now-main" aria-live="polite"><p id="now-kicker">9月21日（月） 東京駅から出発</p><h3 id="now-title">06:16 東京発 → 09:12 福井着</h3><p id="now-note">かがやき501号。東京駅には05:45頃に到着を。</p></div><a class="round-link" href="#journey" id="now-link">旅程へ <span>↗</span></a></section>
 {{SUMMARY}}
-<section class="section-wrap" id="route"><div class="section-heading"><div><p class="eyebrow">FOLLOW THE COLOURS</p><h2>この旅を、地図で。</h2></div><p>日付を選んで、旅の軌跡をたどる。</p></div>{{MAP}}<details class="route-directory"><summary>日ごとの訪問先一覧を開く <span>＋</span></summary><div class="routes">{{ROUTES}}</div></details></section>
+<section class="section-wrap" id="route"><div class="section-heading"><div><p class="eyebrow">A LITTLE ADVENTURE</p><h2>よりみち気分の、冒険地図。</h2></div><p>写真をひらく。道すじをたどる。</p></div>{{MAP}}<details class="route-directory"><summary>日ごとの訪問先一覧を開く <span>＋</span></summary><div class="routes">{{ROUTES}}</div></details></section>
 <section class="section-wrap journey-section" id="journey"><div class="section-heading"><div><p class="eyebrow">YOUR DAY, YOUR PACE</p><h2>今日は、どんな一日に。</h2></div></div><div class="day-tabs" aria-label="日程を選ぶ">{{DAY_TABS}}</div><div id="day-panels">{{JOURNEY}}</div></section>
 <section class="forest-interlude"><img src="assets/eiheiji.webp" alt="緑の杉木立に囲まれた永平寺の建物" loading="lazy" width="1600" height="1067"><div><p class="eyebrow">A MOMENT OF STILLNESS</p><h2>静けさを、ひと呼吸。</h2><p>永平寺 · Day 2</p><a href="#place-eiheiji" class="place-jump">永平寺の案内へ ↗</a></div></section>
 
@@ -148,7 +148,7 @@ for old,name in [('◷','clock'),('☷','ticket'),('⌁','map'),('✓','backpack
 trip=dict(map=map_data,days=days,places=[{k:v for k,v in p.items() if k!='detail'} for p in places],checkedAt='2026-09-10')
 (ROOT/'trip-data.js').write_text('window.TRIP = '+json.dumps(trip,ensure_ascii=False,indent=2)+';\n')
 # Version every shipped local asset. Only this project's caches are removed by the worker.
-assets=['./','./index.html','./style.css','./visual.css','./trip-data.js','./app.js','./journey-extras.js','./manifest.webmanifest','./credits.html','./assets/tojinbo.webp','./assets/eiheiji.webp','./assets/dinosaur.webp','./assets/ichijodani.webp','./assets/icon-192.png','./assets/icon-512.png']
+assets=['./','./index.html','./style.css','./visual.css','./delight.css','./trip-data.js','./app.js','./journey-extras.js','./manifest.webmanifest','./credits.html','./assets/tojinbo.webp','./assets/eiheiji.webp','./assets/dinosaur.webp','./assets/dinosaur-traveler.webp','./assets/ichijodani.webp','./assets/icon-192.png','./assets/icon-512.png']
 missing=[x for x in assets[1:] if not (ROOT/x[2:]).exists()]
 if missing:
     print('HTML generated. Assets still needed:', ', '.join(missing))
