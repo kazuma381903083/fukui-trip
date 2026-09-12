@@ -1,7 +1,7 @@
 'use strict';
 const PREFIX = 'fukui-trip-2026-';
-const CACHE = PREFIX + 'd69605377b52';
-const ASSETS = ["./", "./index.html", "./style.css", "./visual.css", "./delight.css", "./trip-data.js", "./app.js", "./journey-extras.js", "./manifest.webmanifest", "./credits.html", "./assets/tojinbo.webp", "./assets/eiheiji.webp", "./assets/dinosaur.webp", "./assets/dinosaur-traveler.webp", "./assets/ichijodani.webp", "./assets/icon-192.png", "./assets/icon-512.png"];
+const CACHE = PREFIX + 'b66b2cdbb98b';
+const ASSETS = ["./", "./index.html", "./style.css", "./visual.css", "./delight.css", "./museum.html", "./museum.css", "./museum.js", "./trip-data.js", "./app.js", "./journey-extras.js", "./manifest.webmanifest", "./credits.html", "./assets/tojinbo.webp", "./assets/eiheiji.webp", "./assets/dinosaur.webp", "./assets/dinosaur-traveler.webp", "./assets/museum-cabinet.webp", "./assets/ichijodani.webp", "./assets/icon-192.png", "./assets/icon-512.png"];
 const scope = new URL('./', self.location.href);
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));

@@ -1,0 +1,11 @@
+{
+  "tool": "builtin image_gen.imagegen",
+  "prompt": "Use case: illustration-story\nAsset type: A premium editorial illustration banner for a Fukui travel webpage themed as a tiny museum of discoveries.\nPrimary request: A beautiful shallow wooden curiosity cabinet with three open compartments, holding a cohesive still-life of collected travel curiosities.\nSubjects: In the first compartment, a friendly small dinosaur fossil/skeleton model beside rolled woven thread and textile. In the second compartment, sculptural basalt rock columns beside a blue sea fragment and a green cedar branch. In the third compartment, a miniature Japanese historic gate and a small soba bowl with daikon, accompanied by a ceramic sake cup.\nStyle/medium: Refined handprinted Japanese travel journal illustration, tactile risograph grain, elegantly drawn shapes with imperfect ink texture, playful adult editorial charm.\nScene/backdrop: Generous warm cream paper margins around the single curiosity cabinet. Each symbolic object is carefully arranged as a travel memento.\nComposition/framing: Wide landscape panorama around 2:1, intended for a 1200 by 600 banner. Entire cabinet visible and centered with generous cream breathing room on all sides, artwork fully inside frame and not cropped. Three balanced open compartments with no doors and each subject clearly readable.\nColor palette: Warm cream, forest green, muted ochre, muted coral, restrained sea blue. Wood in warm natural ochre tones.\nConstraints: Produce ONE image. These are symbolic collected curiosities, not exact representations of real facilities or food served. No people. No text, no lettering, no logos, no watermark. This is the illustration artwork only, not a UI mockup.",
+  "asset": "assets/museum-cabinet.webp",
+  "optimization": {
+    "max_width": 1400,
+    "quality": 85,
+    "preserve_ratio": true,
+    "format": "WebP"
+  }
+}
