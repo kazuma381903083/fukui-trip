@@ -39,6 +39,7 @@
     const update = () => {
       tabs.forEach(tab => { const on = Number(tab.dataset.day) === n; tab.setAttribute('aria-selected', String(on)); tab.tabIndex = on ? 0 : -1; });
       $$('.day-panel').forEach(panel => { panel.hidden = panel.id !== `day-${n}`; });
+      $('#pocket-discovery').href = `#discovery-${n}`;
     };
     if (animate && document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(update);
     else update();
@@ -68,7 +69,12 @@
   }
   function revealHash(hash) {
     const target = document.getElementById(hash.slice(1));
-    if (target) openParents(target);
+    if (target) {
+      openParents(target);
+      if (target.tagName === 'DETAILS') target.open = true;
+      const panel = target.closest('.day-panel');
+      if (panel) selectDay(Number(panel.id.slice(-1)), false);
+    }
     const day = /^#day-([123])$/.exec(hash);
     if (day) selectDay(Number(day[1]), false);
     if (hash.startsWith('#place-')) {
@@ -87,6 +93,13 @@
     const now = new Date();
     const today = japanDate(now);
     const day = data.days.find(d => d.date === today);
+    const nextFixed = data.days.flatMap(d => d.events.filter(e => e.fixed && e.at && new Date(e.at) > now).map(e => ({...e,day:d})))[0];
+    const fixedLink = $('#now-fixed');
+    fixedLink.hidden = !day || !nextFixed;
+    if (day && nextFixed) {
+      fixedLink.href = `#schedule-${nextFixed.day.n}`;
+      $('span',fixedLink).textContent = `${nextFixed.day.n !== day.n ? nextFixed.day.short + ' ' : ''}${nextFixed.time} ${nextFixed.title} ↗`;
+    }
     if (today < data.days[0].date) {
       const count = Math.ceil((new Date('2026-09-21T00:00:00+09:00') - new Date(today + 'T00:00:00+09:00')) / 86400000);
       $('#now-heading').textContent = `出発まで、あと${count}日`;

@@ -73,5 +73,16 @@ for e in content['exhibits']:
 for asset in ['museum.html','museum.css','museum.js','assets/museum-cabinet.webp']:
     assert asset in sw,f'Museum asset missing from offline release: {asset}'
 assert 'museum.html' in page.links and 'museum.html' in (ROOT/'.github/workflows/pages.yml').read_text()
+discoveries=json.loads((ROOT/'data/discovery-cards.json').read_text())
+assert len(discoveries)==12 and len({card['id'] for card in discoveries})==12
+for day in [1,2,3]:assert sum(c['day']==day for c in discoveries)==4
+for card in discoveries:
+    assert card['placeId'] in places and places[card['placeId']]['day']==card['day']
+    assert card['museumId'] in {e['id'] for e in content['exhibits']}
+for asset in ['play.css','play.js','postcard-renderer.js']:
+    assert asset in sw and asset in (ROOT/'.github/workflows/pages.yml').read_text()
+for control in ['souvenir-dialog','souvenir-canvas','pocket-discovery','now-fixed','rain-plan','reservations','schedule-1','schedule-2','schedule-3']:
+    assert control in page.ids
 print(f'PASS: {len(page.ids)} anchors, {len(places)} places, {sum(len(d["events"]) for d in days)} itinerary entries, travel constraints and offline assets.')
 print('PASS: 8 museum rooms, quiz answers/source references, return links and offline release assets.')
+print('PASS: 12 discoveries matched to itinerary/museum, postcard/pocket anchors and offline release assets.')

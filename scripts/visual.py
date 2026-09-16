@@ -29,7 +29,7 @@ def make_postcards(days):
         cards+=f'''<article class="postcard postcard-{day['n']}"><a href="#day-{day['n']}" class="postcard-image"><img src="assets/{v['photo']}" alt="{v['alt']}" width="1200" height="800" loading="lazy"><span class="postcard-date">DAY 0{day['n']}<b>{day['short']}</b><small>{day['weekday']}</small></span><h3>{v['title']}</h3><span class="postcard-go" aria-label="この日をひらく">{icon('arrow-up-right')}</span></a><div class="postcard-body"><div class="experience-chips">{chips}</div><div class="postcard-times">{peek}</div></div></article>'''
     return f'<div class="postcards">{cards}</div>'
 
-def make_journey(days):
+def make_journey(days, discoveries=None):
     result=''
     for day,v in zip(days,VISUALS):
         milestones=''
@@ -46,5 +46,5 @@ def make_journey(days):
             title=f'<a href="#place-{e["place"]}" class="place-jump">{html.escape(e["title"])} ↗</a>' if e['place'] else html.escape(e['title'])
             fixed='<span class="fixed-label">固定</span>' if e['fixed'] else ''
             full+=f'<li class="event {"is-fixed" if e["fixed"] else ""}"><div class="event-time">{html.escape(e["time"])}{fixed}</div><div class="event-copy"><h4>{title}</h4><p>{html.escape(e["note"])}</p></div></li>'
-        result+=f'''<article class="day-panel day-theme-{day['n']}" id="day-{day['n']}" aria-labelledby="day-tab-{day['n']}"><div class="chapter-layout"><div class="chapter-image"><img src="assets/{v['photo']}" alt="{v['alt']}" width="1200" height="800" loading="lazy"><div class="chapter-photo-copy"><span class="eyebrow">{v['area']}</span><h3>{v['title']}</h3><span>{v['caption']}</span></div><span class="chapter-number">0{day['n']}</span></div><div class="milestones">{milestones}</div></div><div class="day-reminder">{icon('clock')}<p><strong>{day['focus']}</strong><span>{day['note']}</span></p></div><details class="full-schedule"><summary>{icon('clock')} すべての時間・移動を見る <span>＋</span></summary><ol class="timeline">{full}</ol></details></article>'''
+        result+=f'''<article class="day-panel day-theme-{day['n']}" id="day-{day['n']}" aria-labelledby="day-tab-{day['n']}"><div class="chapter-layout"><div class="chapter-image"><img src="assets/{v['photo']}" alt="{v['alt']}" width="1200" height="800" loading="lazy"><div class="chapter-photo-copy"><span class="eyebrow">{v['area']}</span><h3>{v['title']}</h3><span>{v['caption']}</span></div><span class="chapter-number">0{day['n']}</span></div><div class="milestones">{milestones}</div></div><div class="day-reminder">{icon('clock')}<p><strong>{day['focus']}</strong><span>{day['note']}</span></p></div><details class="full-schedule" id="schedule-{day['n']}"><summary>{icon('clock')} すべての時間・移動を見る <span>＋</span></summary><ol class="timeline">{full}</ol></details>{(discoveries or {}).get(day['n'],'')}</article>'''
     return result
