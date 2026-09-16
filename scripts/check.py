@@ -83,6 +83,17 @@ for asset in ['play.css','play.js','postcard-renderer.js']:
     assert asset in sw and asset in (ROOT/'.github/workflows/pages.yml').read_text()
 for control in ['souvenir-dialog','souvenir-canvas','pocket-discovery','now-fixed','rain-plan','reservations','schedule-1','schedule-2','schedule-3']:
     assert control in page.ids
+help_data=json.loads((ROOT/'data/field-help.json').read_text())
+assert len(help_data['answers'])==9
+assert {(a['day'],a['scene']) for a in help_data['answers']}=={(d,s) for d in (1,2,3) for s in ('drive','pace','comfort')}
+for answer in help_data['answers']:
+    assert answer['sourceTitle'] and answer['sourceURL'] and len(answer['text'])<=100
+    for link in [answer['href'],answer['sourceURL']]:
+        assert link.startswith('https://') or link.startswith('#') and link[1:] in page.ids
+for asset in ['wonder.css','wonder.js']:
+    assert asset in sw and asset in (ROOT/'.github/workflows/pages.yml').read_text()
+assert text.count('class="gacha-show"')==3 and 'map-night-toggle' in page.ids and 'field-help' in page.ids
 print(f'PASS: {len(page.ids)} anchors, {len(places)} places, {sum(len(d["events"]) for d in days)} itinerary entries, travel constraints and offline assets.')
 print('PASS: 8 museum rooms, quiz answers/source references, return links and offline release assets.')
 print('PASS: 12 discoveries matched to itinerary/museum, postcard/pocket anchors and offline release assets.')
+print('PASS: 9 concise field answers with sources, capsule effects and night-map controls included in release.')

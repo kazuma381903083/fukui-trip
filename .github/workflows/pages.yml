@@ -27,7 +27,7 @@ jobs:
           python scripts/build.py
           python scripts/check.py
           mkdir _site
-          cp index.html museum.html museum.css museum.js play.css play.js postcard-renderer.js credits.html style.css visual.css delight.css app.js journey-extras.js trip-data.js sw.js manifest.webmanifest _site/
+          cp index.html museum.html museum.css museum.js wonder.css wonder.js play.css play.js postcard-renderer.js credits.html style.css visual.css delight.css app.js journey-extras.js trip-data.js sw.js manifest.webmanifest _site/
           cp -R assets _site/assets
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5

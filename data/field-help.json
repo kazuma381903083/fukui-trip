@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026.09.16",
+  "answers": [
+    {"day":1,"scene":"drive","title":"満車なら、誘導に従う。","text":"9/21は交通規制の対象日。園内が満車なら、係員の誘導でJAMの臨時駐車場へ。そこから無料シャトルに乗り換えます。","anchor":"11:00 入館予約","note":"予約した入館枠","action":"恐竜博物館の案内","href":"#place-dinosaur","sourceTitle":"勝山市・秋の交通規制","sourceURL":"https://www.city.katsuyama.fukui.jp/soshiki/15/25308.html"},
+    {"day":1,"scene":"pace","title":"見学を短く、体験を優先。","text":"到着が遅れたら、恐竜博物館の見学を短縮。臨時駐車場なら13:00頃の見学終了を目安に、帰りのバス待ちを現地で確認します。","anchor":"15:00 手織り体験","note":"予約済み・固定","action":"この日の時間割","href":"#schedule-1","sourceTitle":"しおりの対応方針","sourceURL":"#rain-plan"},
+    {"day":1,"scene":"comfort","title":"手織りの受付は「シルク」。","text":"まずはおみやげ処「シルク」で予約と支払い状況を確認。体験チケットはスタッフへ。「16:00に出発したい」と先に相談しておこう。","anchor":"16:00 勝山を出発","note":"しおりの出発目安","action":"ゆめおーれの案内","href":"#place-weaving","sourceTitle":"ゆめおーれ勝山・体験の案内","sourceURL":"https://www.city.katsuyama.fukui.jp/hataya/taiken.html"},
+    {"day":2,"scene":"drive","title":"ホテルへは「大手駐車場」。","text":"第一候補は大手駐車場。「大手第二」とは別の駐車場です。駐車券を持ってフロントで宿泊者料金の扱いを確認し、夜は車を置いて徒歩で。","anchor":"17:00頃 ホテルへ","note":"しおりの到着目安","action":"ホテル・駐車場の案内","href":"#place-fujita","sourceTitle":"ホテルフジタ福井・アクセス","sourceURL":"https://www.hotel-fujita.jp/fukui/access/"},
+    {"day":2,"scene":"pace","title":"減らすなら、寄り道から。","text":"雨や強風なら東尋坊の散策を短縮・中止。昼食や移動が押したらESHIKOTOのカフェを省略し、必要なら立ち寄り自体も見送ります。","anchor":"14:00 ESHIKOTO出発","note":"立ち寄る場合の出発目安","action":"雨・遅れの対応を見る","href":"#rain-plan","sourceTitle":"しおりの対応方針","sourceURL":"#rain-plan"},
+    {"day":2,"scene":"comfort","title":"永平寺は、階段もゆっくり。","text":"お堂どうしは屋根付きの回廊でつながり、雨でも屋内を見学できます。山の斜面に建つため階段は多め。歩くペースに合わせて、ひと息ずつ。","anchor":"14:30–16:00 永平寺","note":"しおりの参拝予定","action":"永平寺の案内","href":"#place-eiheiji","sourceTitle":"永平寺・よくあるご質問","sourceURL":"https://daihonzan-eiheiji.com/question.html"},
+    {"day":3,"scene":"drive","title":"博物館と町並は、別の場所。","text":"午後は復原町並へ、ナビの行き先を入れ直そう。南北に駐車場があります。ガイドを手配できた場合は、指定された集合場所を優先します。","anchor":"13:00 ガイド希望","note":"予約調整中・未確定","action":"遺跡・集合場所の案内","href":"#place-ruins","sourceTitle":"福井市公式・一乗谷モデルコース","sourceURL":"https://fuku-iro.jp/course/detail_35.html#388"},
+    {"day":3,"scene":"pace","title":"最後は、帰り道に余白を。","text":"大雨・雷なら屋外見学を短縮・中止して博物館中心に。ガイドへの連絡は確認した条件に従います。帰路が渋滞したら角打ちを省略し、返却と新幹線を優先。","anchor":"18:18 福井駅発","note":"新幹線・予約済み","action":"給油・返却の案内","href":"#place-fuel","sourceTitle":"しおりの対応方針","sourceURL":"#rain-plan"},
+    {"day":3,"scene":"comfort","title":"荷物を預けて、身軽に。","text":"車を返した後、荷物が多ければ「くるふ福井駅」のコインロッカーも候補に。預けた場所を写真に残し、改札へ向かう前に回収しよう。","anchor":"17:45頃 新幹線改札へ","note":"しおりの行動目安","action":"駅の館内図をひらく","href":"https://curu-f.jp/floor/","sourceTitle":"くるふ福井駅・館内サービス","sourceURL":"https://curu-f.jp/info/"}
+  ]
+}

@@ -41,6 +41,7 @@ with sync_playwright() as p:
     assert page.evaluate('document.getAnimations().filter(a=>a.playState==="running").length')==0
     for target in ['reservations','rain-plan']:
         page.locator(f'.journey-pockets a[href="#{target}"]').click()
+        if target=='rain-plan':page.locator('.field-footer a').click()
         expect(page.locator('#'+target)).to_have_attribute('open','')
     # The next fixed event retains its actual date and reaches the full timetable.
     page.clock.install(time=datetime.fromisoformat('2026-09-21T11:05:00+09:00'))

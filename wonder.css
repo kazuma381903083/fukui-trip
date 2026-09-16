@@ -1,0 +1,84 @@
+/* A brighter toy, a night-sky map, and one helpful answer at a time. */
+.discovery-drawer { --gacha:#edb444; --gacha-pale:#f7edcf; border: 1px solid #c6ad7c; border-radius: 14px; background: var(--gacha-pale); box-shadow: 3px 4px 0 #d4c8a64d; }
+.day-theme-2 .discovery-drawer { --gacha:#75b9ad; --gacha-pale:#e4f0df; border-color:#9eafa0; }
+.day-theme-3 .discovery-drawer { --gacha:#b4a0c9; --gacha-pale:#eee6f0; border-color:#b5a7be; }
+.discovery-drawer>summary { background: var(--gacha); padding: 17px 24px; }
+.discovery-drawer>summary>span { font-weight: 600; }.discovery-drawer>summary .ui-icon { color:#25483a; transform:rotate(-12deg); }
+.discovery-drawer>summary small { color:#355647; }.discovery-drawer>summary>b { color:#254738; background:#fffdf0b3; padding:7px 12px; border-radius:22px; }
+.discovery-drawer[open]>summary { border-bottom:1px solid #29483833; }
+.discovery-inside { padding-top:20px; }.discovery-intro { color:#65755b; }
+.discovery-deck { position:relative; isolation:isolate; }
+.discovery-card { border: 1.5px solid #b2b79d; border-radius: 8px; box-shadow: 4px 5px 0 var(--gacha); }
+.discovery-art::before { width:110px; height:62px; top:20px; left:calc(50% - 68px); border:1.5px solid #697f6477; border-radius:70px 70px 6px 6px; background:#eff1df!important; }
+.discovery-art::after { content:''; position:absolute; z-index:-1; top:85px; left:calc(50% - 68px); width:110px; height:59px; border:1.5px solid #697f6477; border-radius:6px 6px 70px 70px; background:var(--gacha); }
+.discovery-art>.ui-icon { color:#365e48; }.discovery-art>b { color:#32503c; bottom:32px; right:20px; }.discovery-orbit { display:none; }
+.discovery-draw { background:#294e3d; color:#fff9e8; padding:7px 18px 7px 8px; box-shadow:2px 3px 0 #203f2926; font-weight:500; border-color:#294e3d; gap:12px; }
+.discovery-draw .gacha-handle { display:grid; place-items:center; width:35px; height:35px; border-radius:50%; margin:0; background:var(--gacha); color:#244635; font-size:29px; line-height:1; box-shadow:inset 0 0 0 3px #fffcde44; }
+.discovery-draw:active { transform:translateY(2px); box-shadow:none; }.discovery-draw:disabled { cursor:wait; }
+.is-drawing .discovery-card { opacity:0; }
+.gacha-show { position:absolute; inset:0; z-index:3; display:grid; place-items:center; background:var(--gacha-pale); border:1px solid #abaf9866; border-radius:8px; overflow:hidden; pointer-events:none; }
+.gacha-ball { position:relative; width:156px; height:156px; z-index:1; }
+.gacha-top,.gacha-bottom { position:absolute; left:0; width:156px; height:77px; border:2px solid #315744; box-shadow:inset 8px 3px 0 #ffffff55; }
+.gacha-top { top:0; border-radius:100px 100px 10px 10px; background:#fffef0; }
+.gacha-top::after { content:''; position:absolute; width:15px; height:26px; left:28px; top:19px; background:#bfdccc88; border-radius:50%; transform:rotate(40deg); }
+.gacha-bottom { bottom:0; border-radius:10px 10px 100px 100px; background:var(--gacha); }
+.gacha-ball>b { position:absolute; inset:0; display:grid; place-items:center; color:#244b37; font:52px var(--serif); }
+.gacha-rays { position:absolute; width:420px; height:420px; border-radius:50%; background:repeating-conic-gradient(from 0deg,var(--gacha) 0deg 8deg,transparent 8deg 32deg); opacity:0; }
+.gacha-pop { position:absolute; bottom:18px; z-index:2; font-size:12px; letter-spacing:.12em; color:#35563e; }
+.journey-pockets a:first-child { background:#edbd53; border-color:#d6a63d; color:#204734; }
+.journey-pockets a:first-child:hover { background:#f3c76b; }
+
+.map-night-toggle { display:flex; align-items:center; justify-content:center; gap:6px; margin-left:auto; border:1px solid #b2bd9c; border-radius:24px; background:#e9dfae; color:#294b44; min-height:44px; padding:7px 13px; font-size:11px; white-space:nowrap; }
+.map-night-toggle>.ui-icon { width:17px; height:17px; }
+.map-night-toggle[aria-pressed=true] { background:#203d54; color:#ffe5a6; border-color:#203d54; }
+.map-night-sky { opacity:0; transition:opacity .5s; }.map-night-sky circle { fill:#f4e1a3; }.map-crescent { fill:#ffe3a1; }.map-star-cross { stroke:#dec894; fill:none; stroke-width:1; }.map-comet { opacity:0; stroke:#fff0b9; stroke-linecap:round; stroke-width:1.5; }
+.map-sea,.map-land { transition:fill .5s,stroke .5s; }
+.is-night .map-sea { fill:#102d46; }.is-night .map-land { fill:#253d50; stroke:#4b6271; }.is-night .map-land.is-fukui { fill:#2e4d57; stroke:#62817b; }
+.is-night .map-surface { background:#102d46; }.is-night .map-night-sky { opacity:1; }
+.is-night .map-display-type { fill:#d8d7a8; opacity:.44; }.is-night .map-subtitle { fill:#b3c5ab; }.is-night .sea-label { fill:#9bbdc6; }
+.is-night .map-small,.is-night .region-label { fill:#b3c4be; }.is-night .map-north text { fill:#e6d79d; }.is-night .map-north path { stroke:#e6d79d; }
+.is-night .map-label { fill:#f7ebc4; stroke:#2e4d57; }.is-night .map-point.is-selected .map-label { fill:#fff09b; }
+.is-night .map-leader { stroke:#bed3b4; opacity:.65; }.is-night .map-pin { fill:#25453f; stroke:#cddcaa; }
+.is-night .map-route { filter:drop-shadow(0 0 3px #ffffaa55); opacity:1; }
+.is-night .map-route-day[data-map-route="1"] .map-route { stroke:#f1bf79; }.is-night #arrow-1 path { stroke:#f1bf79; }
+.is-night .map-route-day[data-map-route="2"] .map-route { stroke:#78e0dc; }.is-night #arrow-2 path { stroke:#78e0dc; }
+.is-night .map-route-day[data-map-route="3"] .map-route { stroke:#d8df86; }.is-night #arrow-3 path { stroke:#d8df86; }
+.is-night .map-legend { background:#1f3c4c; color:#e3ead4; border-color:#516774; }
+.is-night .map-legend>span:nth-child(1) i { background:#f1bf79; }.is-night .map-legend>span:nth-child(2) i { background:#78e0dc; }.is-night .map-legend>span:nth-child(3) i { background:#d8df86; }
+.is-night .map-night-toggle { background:#eadba6; color:#294b44; border-color:#eadba6; }
+.is-night .map-scale path { stroke:#c1cab5; }
+.is-night .map-route-day.is-muted { opacity:.07; }.is-night .map-icon-sticker { color:#355948; }.is-night .map-mascot img { filter:drop-shadow(0 0 10px #edd58b55); }
+.is-night .map-inset { opacity:.9; }.is-night .map-point .map-visited { fill:#ffe295; stroke:#507363; }
+
+.field-help { width:min(560px,calc(100% - 24px)); max-height:calc(100dvh - 30px); margin:auto; padding:27px; color:#244637; border:1px solid #dedcc5; border-radius:18px; background:#f6f3e5; box-shadow:0 24px 100px #122d3970; overflow:auto; overscroll-behavior:contain; }
+.field-help::backdrop { background:#142e42b3; backdrop-filter:blur(5px); }
+.field-help-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:15px; margin-bottom:22px; }.field-help-heading .eyebrow { font-size:9px; letter-spacing:.13em; color:#7f8b70; }
+.field-help-heading h2 { font:30px/1.6 var(--serif); margin-top:5px; font-weight:500; }
+#field-help-close { width:44px; height:44px; flex-shrink:0; border:1px solid #cbd1ba; border-radius:50%; background:#ededdc; font-size:25px; }
+.field-days { display:grid; grid-template-columns:repeat(3,1fr); border:1px solid #cbd0b7; border-radius:9px; padding:4px; gap:4px; background:#ececda; }
+.field-days button { border:0; border-radius:6px; background:transparent; padding:9px; color:#395442; font:22px/1.5 Georgia,serif; }.field-days button>span { display:block; font:8px/1.8 var(--sans); letter-spacing:.12em; }
+.field-days button[aria-pressed=true] { background:#2f5541; color:#fff5d5; }
+.field-scenes { display:flex; gap:6px; margin:17px 0 20px; }.field-scenes button { display:flex; align-items:center; justify-content:center; gap:6px; border:1px solid #c7cfb4; border-radius:24px; min-height:44px; padding:8px 12px; background:transparent; font-size:12px; flex:1; white-space:nowrap; }.field-scenes .ui-icon { width:17px; height:17px; }
+.field-scenes button[aria-pressed=true] { background:#ead390; border-color:#d6bf7e; color:#284732; }
+.field-answer { background:#fffdf2; border:1px solid #d9dbc5; border-radius:7px; padding:23px; box-shadow:3px 4px 0 #dedec955; }
+.field-answer .eyebrow { color:#8c9679; font-size:9px; letter-spacing:.1em; }.field-answer h3 { font:25px/1.6 var(--serif); font-weight:500; margin:12px 0 15px; }
+.field-answer h3,.discovery-copy h4 { text-wrap:balance; }
+.field-answer-copy { font-size:16px; line-height:1.95; }.field-anchor { display:flex; gap:11px; align-items:center; background:#eef0dc; padding:12px 14px; margin-top:21px; border-left:2px solid #ac8a43; }
+.field-anchor>.ui-icon { width:20px; height:20px; flex-shrink:0; color:#6f7e53; }.field-anchor strong { display:block; font-size:14px; font-weight:500; }.field-anchor small { display:block; color:#7e8870; font-size:10px; }
+.field-action { display:inline-flex; align-items:center; min-height:44px; font-size:13px; margin-top:14px; border-bottom:1px solid #b8c0a6; }
+.field-source { font-size:10px; color:#7b866d; margin-top:16px; line-height:1.8; }.field-source a { text-decoration:underline; text-underline-offset:3px; }
+.field-footer { display:flex; justify-content:space-between; gap:12px; font-size:10px; color:#7e8a71; margin-top:20px; }.field-footer a { text-decoration:underline; text-underline-offset:4px; }
+body:has(.field-help[open]) { overflow:hidden; }
+@media(max-width:620px) {
+ .discovery-drawer>summary { padding:16px 15px; }.discovery-drawer>summary>b { padding:6px 9px; font-size:10px; }.discovery-inside { padding:16px 13px 18px; }.discovery-card { border-radius:6px; }
+ .discovery-art::before { width:80px; height:39px; top:0; left:calc(50% - 40px); border-radius:50px 50px 4px 4px; }.discovery-art::after { width:80px; height:39px; top:42px; left:calc(50% - 40px); border-radius:4px 4px 50px 50px; }.discovery-art>b { bottom:21px; right:calc(50% - 69px); }.discovery-art>.ui-icon { width:44px; height:44px; margin-top:-7px; }
+ .discovery-draw { padding:7px 13px 7px 7px; gap:8px; font-size:12px; }.discovery-draw .gacha-handle { width:33px; height:33px; font-size:28px; }
+ .gacha-pop { bottom:32px; font-size:11px; }.gacha-ball { margin-top:-10px; }
+ .map-legend { gap:10px; padding:8px 12px; }.map-night-toggle { gap:5px; padding:7px 10px; font-size:10px; }
+ .field-help { padding:20px 16px; }.field-help-heading { margin-bottom:18px; }.field-help-heading h2 { font-size:26px; }.field-help-heading .eyebrow { font-size:8px; }.field-days button { font-size:20px; padding:7px; }
+ .field-scenes { margin:13px 0 17px; gap:5px; }.field-scenes button { gap:4px; font-size:11px; padding:8px; }.field-scenes .ui-icon { width:15px; height:15px; }
+ .field-answer { padding:20px 18px; }.field-answer h3 { font-size:23px; }.field-answer-copy { font-size:16px; line-height:1.9; }.field-anchor { padding:11px 10px; gap:8px; }.field-anchor strong { font-size:13px; }.field-action { font-size:12px; }.field-source { font-size:10px; }.field-footer { font-size:9px; }
+}
+@media(max-width:360px) { .discovery-drawer>summary>b { font-size:9px; padding:6px 8px; }.map-legend { gap:8px; }.map-night-toggle { padding:7px 8px; }.map-night-toggle>.ui-icon { width:15px; }.field-help { padding:17px 13px; }.field-scenes button { font-size:10px; gap:3px; padding:8px 6px; }.field-answer { padding:18px 15px; }.field-answer h3 { font-size:21px; }.field-anchor strong { font-size:12px; } }
+@media(prefers-reduced-motion:reduce) { .map-night-sky,.map-sea,.map-land { transition:none; } }
+@media print { .map-night-toggle,.map-night-sky,.field-help { display:none!important; }.map-sea { fill:#d8e9e7!important; transition:none; }.map-land { fill:#eeefe1!important; stroke:#b9c7aa!important; transition:none; }.map-land.is-fukui { fill:#e8ebd6!important; stroke:#9caf93!important; } }

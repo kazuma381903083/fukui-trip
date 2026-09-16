@@ -1,7 +1,7 @@
 'use strict';
 const PREFIX = 'fukui-trip-2026-';
-const CACHE = PREFIX + 'd635cac236dc';
-const ASSETS = ["./", "./index.html", "./style.css", "./visual.css", "./delight.css", "./play.css", "./play.js", "./postcard-renderer.js", "./museum.html", "./museum.css", "./museum.js", "./trip-data.js", "./app.js", "./journey-extras.js", "./manifest.webmanifest", "./credits.html", "./assets/tojinbo.webp", "./assets/eiheiji.webp", "./assets/dinosaur.webp", "./assets/dinosaur-traveler.webp", "./assets/museum-cabinet.webp", "./assets/ichijodani.webp", "./assets/icon-192.png", "./assets/icon-512.png"];
+const CACHE = PREFIX + '03bea6af931b';
+const ASSETS = ["./", "./index.html", "./style.css", "./visual.css", "./delight.css", "./wonder.css", "./wonder.js", "./play.css", "./play.js", "./postcard-renderer.js", "./museum.html", "./museum.css", "./museum.js", "./trip-data.js", "./app.js", "./journey-extras.js", "./manifest.webmanifest", "./credits.html", "./assets/tojinbo.webp", "./assets/eiheiji.webp", "./assets/dinosaur.webp", "./assets/dinosaur-traveler.webp", "./assets/museum-cabinet.webp", "./assets/ichijodani.webp", "./assets/icon-192.png", "./assets/icon-512.png"];
 const scope = new URL('./', self.location.href);
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));

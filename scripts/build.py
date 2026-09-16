@@ -5,6 +5,7 @@ import markdown
 from enrich import make_map, make_summary, make_stamps
 from visual import make_journey, icon
 from museum import build_museum
+from field_help import make_field_help
 from play import make_discoveries, make_pockets, make_postcard_studio, make_postcard_dialog
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -118,8 +119,8 @@ page='''<!doctype html>
 <meta name="robots" content="noindex,nofollow"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ふくいのしおり">
 <title>ふくい、余白の三日間。｜2026.9.21–23</title>
 <link rel="icon" href="assets/icon-192.png" type="image/png"><link rel="apple-touch-icon" href="assets/icon-192.png"><link rel="manifest" href="manifest.webmanifest">
-<link rel="preload" as="image" href="assets/tojinbo.webp" fetchpriority="high"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="visual.css"><link rel="stylesheet" href="delight.css"><link rel="stylesheet" href="museum.css"><link rel="stylesheet" href="play.css">
-<script src="trip-data.js" defer></script><script src="app.js" defer></script><script src="journey-extras.js" defer></script><script src="postcard-renderer.js" defer></script><script src="play.js" defer></script>
+<link rel="preload" as="image" href="assets/tojinbo.webp" fetchpriority="high"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="visual.css"><link rel="stylesheet" href="delight.css"><link rel="stylesheet" href="museum.css"><link rel="stylesheet" href="play.css"><link rel="stylesheet" href="wonder.css">
+<script src="trip-data.js" defer></script><script src="app.js" defer></script><script src="journey-extras.js" defer></script><script src="postcard-renderer.js" defer></script><script src="play.js" defer></script><script src="wonder.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#journey">旅程へスキップ</a>
@@ -142,10 +143,11 @@ page='''<!doctype html>
 <footer class="site-footer"><div><a class="footer-title" href="#top">ふくい、余白の三日間。</a><p>2026.09.21 — 09.23 · FOR THE TWO OF US.</p></div><div><p>旅程・営業情報の原稿確認基準日：2026.09.10<br>臨時営業・天候・交通状況は出発前に公式案内で確認。</p><a href="credits.html">写真・地図の出典</a><span class="footer-divider"> / </span><a href="#top">表紙へ戻る ↑</a></div></footer>
 </main>
 {{POSTCARD_DIALOG}}
+{{FIELD_HELP}}
 <nav class="mobile-nav" aria-label="スマートフォン用ナビゲーション"><a href="#now"><span aria-hidden="true">◷</span>今日</a><a href="#journey"><span aria-hidden="true">☷</span>旅程</a><a href="#route"><span aria-hidden="true">⌁</span>地図</a><a href="#preparation"><span aria-hidden="true">✓</span>準備</a></nav>
 <noscript><div class="noscript">JavaScriptが無効です。全日程はそのまま読めます。日程の切り替え・チェックの保存・オフライン保存にはJavaScriptが必要です。</div></noscript>
 </body></html>'''
-replacements={'POCKETS':make_pockets(),'POSTCARD_DIALOG':make_postcard_dialog(),'MUSEUM':museum_invitation,'MAP':map_html,'SUMMARY':summary_html,'STAMPS':stamps_html,'DAY_TABS':''.join(f'<a href="#day-{d["n"]}" id="day-tab-{d["n"]}" class="day-tab" data-day="{d["n"]}"><span>DAY 0{d["n"]}</span><strong>{d["short"]}<small>{d["weekday"]}</small></strong><span class="tab-theme">{["恐竜・手織り・温泉","日本海・永平寺・福井酒","一乗谷・角打ち・帰京"][d["n"]-1]}</span></a>' for d in days),'JOURNEY':journey,'PLACES':place_cards,'ROUTES':routes,'PREP':prep,'PACKING':packing,'BUDGET':budget,'RESERVATIONS':reservations,'RAIN':rain}
+replacements={'FIELD_HELP':make_field_help(),'POCKETS':make_pockets(),'POSTCARD_DIALOG':make_postcard_dialog(),'MUSEUM':museum_invitation,'MAP':map_html,'SUMMARY':summary_html,'STAMPS':stamps_html,'DAY_TABS':''.join(f'<a href="#day-{d["n"]}" id="day-tab-{d["n"]}" class="day-tab" data-day="{d["n"]}"><span>DAY 0{d["n"]}</span><strong>{d["short"]}<small>{d["weekday"]}</small></strong><span class="tab-theme">{["恐竜・手織り・温泉","日本海・永平寺・福井酒","一乗谷・角打ち・帰京"][d["n"]-1]}</span></a>' for d in days),'JOURNEY':journey,'PLACES':place_cards,'ROUTES':routes,'PREP':prep,'PACKING':packing,'BUDGET':budget,'RESERVATIONS':reservations,'RAIN':rain}
 for key,val in replacements.items(): page=page.replace('{{'+key+'}}',val)
 for old,name in [('◷','clock'),('☷','ticket'),('⌁','map'),('✓','backpack')]:
     page=page.replace(f'<span aria-hidden="true">{old}</span>',f'<span aria-hidden="true">{icon(name)}</span>')
@@ -153,7 +155,7 @@ for old,name in [('◷','clock'),('☷','ticket'),('⌁','map'),('✓','backpack
 trip=dict(map=map_data,days=days,places=[{k:v for k,v in p.items() if k!='detail'} for p in places],checkedAt='2026-09-10')
 (ROOT/'trip-data.js').write_text('window.TRIP = '+json.dumps(trip,ensure_ascii=False,indent=2)+';\n')
 # Version every shipped local asset. Only this project's caches are removed by the worker.
-assets=['./','./index.html','./style.css','./visual.css','./delight.css','./play.css','./play.js','./postcard-renderer.js','./museum.html','./museum.css','./museum.js','./trip-data.js','./app.js','./journey-extras.js','./manifest.webmanifest','./credits.html','./assets/tojinbo.webp','./assets/eiheiji.webp','./assets/dinosaur.webp','./assets/dinosaur-traveler.webp','./assets/museum-cabinet.webp','./assets/ichijodani.webp','./assets/icon-192.png','./assets/icon-512.png']
+assets=['./','./index.html','./style.css','./visual.css','./delight.css','./wonder.css','./wonder.js','./play.css','./play.js','./postcard-renderer.js','./museum.html','./museum.css','./museum.js','./trip-data.js','./app.js','./journey-extras.js','./manifest.webmanifest','./credits.html','./assets/tojinbo.webp','./assets/eiheiji.webp','./assets/dinosaur.webp','./assets/dinosaur-traveler.webp','./assets/museum-cabinet.webp','./assets/ichijodani.webp','./assets/icon-192.png','./assets/icon-512.png']
 missing=[x for x in assets[1:] if not (ROOT/x[2:]).exists()]
 if missing:
     print('HTML generated. Assets still needed:', ', '.join(missing))
